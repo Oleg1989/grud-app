@@ -3,14 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { OwnersComponent } from './owners/owners.component';
+import { OwnerComponent } from './owner/owner.component';
+import { EditOwnerComponent } from './edit-owner/edit-owner.component';
+import { CarComponent } from './car/car.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    OwnersComponent,
+    OwnerComponent,
+    EditOwnerComponent,
+    CarComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
