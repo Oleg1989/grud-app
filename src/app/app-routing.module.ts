@@ -8,19 +8,19 @@ import { OwnersComponent } from './owners/owners.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'owners',
+    redirectTo: 'api/owners',
     pathMatch: 'full',
   },
   {
-    path: 'owners',
+    path: 'api/owners',
     component: OwnersComponent,
   },
   {
-    path: 'edit-owner',
+    path: 'api/edit-owner',
     component: EditOwnerComponent,
   },
   {
-    path: 'owners/:id',
+    path: 'api/owners/:id',
     component: OwnerComponent,
   }
 ];
