@@ -1,5 +1,7 @@
+import { Guid } from 'guid-typescript';
+
 export interface CarEntity {
-    aCarId: number;
+    aCarId: string;
     stateNumber: string;
     manufacturerName: string;
     modelName: string;

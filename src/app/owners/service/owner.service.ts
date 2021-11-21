@@ -4,10 +4,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { OwnerEntity } from './interface/owner-entity';
-import { ICarOwnersService } from './interface/i-car-owners-service';
-import { CarEntity } from './interface/car-entity';
-import { MessageService } from './message.service';
+import { OwnerEntity } from '../../interface/owner-entity';
+import { ICarOwnersService } from '../../interface/i-car-owners-service';
+import { CarEntity } from '../../interface/car-entity';
+import { MessageService } from '../../message.service';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
   providedIn: 'root'
@@ -32,15 +33,25 @@ export class OwnerService implements ICarOwnersService {
         catchError(this.handleError<OwnerEntity[]>('getOwners', []))
       );
   }
-  getOwnerById(aId: number): Observable<OwnerEntity> {
+  getOwnerById(aId: string): Observable<OwnerEntity> {
     const url = `${this.ownersUrl}/${aId}`;
     return this.http.get<OwnerEntity>(url).pipe(
       tap(_ => this.log(`fetched owner id=${aId}`)),
       catchError(this.handleError<OwnerEntity>(`getOwner id=${aId}`))
     );
   }
-  createOwner(aLastName: string, aFirstName: string, aMiddleName: string, aCars: CarEntity[]): Observable<OwnerEntity> {
-    return this.http.post<OwnerEntity>(this.ownersUrl, { aLastName: aLastName, aFirstName: aFirstName, aMiddleName: aMiddleName, aCars: aCars }, this.httpOptions).pipe(
+  createOwner(
+    aLastName: string,
+    aFirstName: string,
+    aMiddleName: string,
+    aCars: CarEntity[]
+  ): Observable<OwnerEntity> {
+    return this.http.post<OwnerEntity>(this.ownersUrl, {
+      aLastName: aLastName,
+      aFirstName: aFirstName,
+      aMiddleName: aMiddleName,
+      aCars: aCars
+    }, this.httpOptions).pipe(
       tap((newOwner: OwnerEntity) => this.log(`added owner w/ id=${newOwner.id}`)),
       catchError(this.handleError<OwnerEntity>('addOwner'))
     );
@@ -51,7 +62,7 @@ export class OwnerService implements ICarOwnersService {
       catchError(this.handleError<any>('updateOwner'))
     );
   }
-  deleteOwner(aOwnerId: number): Observable<OwnerEntity[]> {
+  deleteOwner(aOwnerId: string): Observable<OwnerEntity[]> {
     const url = `${this.ownersUrl}/${aOwnerId}`;
 
     return this.http.delete<OwnerEntity>(url, this.httpOptions).pipe(

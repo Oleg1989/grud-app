@@ -4,7 +4,7 @@ import { OwnerEntity } from "./owner-entity";
 
 export interface ICarOwnersService {
     getOwners(): Observable<OwnerEntity[]>;
-    getOwnerById(aId: number): Observable<OwnerEntity>;
+    getOwnerById(aId: string): Observable<OwnerEntity>;
     createOwner(
         aLastName: string,
         aFirstName: string,
@@ -12,6 +12,6 @@ export interface ICarOwnersService {
         aCars: CarEntity[]
     ): Observable<OwnerEntity>;
     editOwner(aOwner: OwnerEntity): Observable<null | OwnerEntity>;
-    deleteOwner(aOwnerId: number): Observable<OwnerEntity[]>;
+    deleteOwner(aOwnerId: string): Observable<OwnerEntity[]>;
 
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { OwnerEntity } from '../interface/owner-entity';
+import * as cuid from 'cuid';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,13 @@ export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     const owners: OwnerEntity[] = [
       {
-        id: 11,
+        id: cuid(),
         aLastName: 'Петров',
         aFirstName: 'Петр',
         aMiddleName: 'Петрович',
         aCars: [
           {
-            aCarId: 99,
+            aCarId: cuid(),
             stateNumber: 'AX1111HP',
             manufacturerName: 'Toyota',
             modelName: 'Corola',
@@ -27,13 +28,13 @@ export class InMemoryDataService implements InMemoryDbService {
         ],
       },
       {
-        id: 12,
+        id: cuid(),
         aLastName: 'Иванов',
         aFirstName: 'Иван',
         aMiddleName: 'Иванович',
         aCars: [
           {
-            aCarId: 98,
+            aCarId: cuid(),
             stateNumber: 'AX2222HP',
             manufacturerName: 'Toyota',
             modelName: 'Corola',
@@ -45,8 +46,8 @@ export class InMemoryDataService implements InMemoryDbService {
     return { owners };
   }
 
-  genId(owners: OwnerEntity[]): number {
-    return owners.length > 0 ? Math.max(...owners.map(owner => owner.id)) + 1 : 11;
+  genId(owners: OwnerEntity[]): string {
+    return owners.length > 0 ? cuid() : cuid();
   }
 
 }

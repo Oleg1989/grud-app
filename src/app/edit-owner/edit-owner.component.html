@@ -1,43 +1,83 @@
 <div class="container">
     <div class="row">
-        <form class="col s4">
+        <form class="col s12" [formGroup]="profileForm">
             <div class="row">
-                <div class="input-field col s12">
-                    <input id="last_name" type="text" class="validate">
-                    <label for="last_name">Фамилия</label>
+                <div class="col s4">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="last_name" type="text" class="validate" name="aLastName"
+                                formControlName="aLastName" autofocus>
+                            <label for="last_name">Фамилия</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input id="first_name" type="text" class="validate" name="aFirstName"
+                                formControlName="aFirstName">
+                            <label for="first_name">Имя</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input id="middle_name" type="text" class="validate" name="aMiddleName"
+                                formControlName="aMiddleName">
+                            <label for="middle_name">Отчество</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="input-field col s12">
-                    <input id="first_name" type="text" class="validate">
-                    <label for="first_name">Имя</label>
-                </div>
-                <div class="input-field col s12">
-                    <input id="middle_name" type="text" class="validate">
-                    <label for="middle_name">Отчество</label>
+            </div>
+            <h2 class="teal-text teal-darken-2">Автомобили</h2>
+            <div class="row">
+                <div class="row">
+                    <div class="col s12">
+                        <div formArrayName="cars">
+                            <div *ngFor="let car of cars.controls; let i=index">
+                                <div class="row">
+                                    <div class="col s2">
+                                        <div class="input-field col s12">
+                                            <input id="state-number-{{i}}" type="text" class="validate"
+                                                [formControlName]="i">
+                                            <label for="state-number{{i}}">Номер</label>
+                                        </div>
+                                    </div>
+                                    <div class="col s2">
+                                        <div class="input-field col s12">
+                                            <input id="manufacturer-name-{{i}}" type="text" class="validate"
+                                                [formControlName]="i">
+                                            <label for="manufacturer-name{{i}}">Марка</label>
+                                        </div>
+                                    </div>
+                                    <div class="col s2">
+                                        <div class="input-field col s12">
+                                            <input id="model-name-{{i}}" type="text" class="validate"
+                                                [formControlName]="i">
+                                            <label for="model-name{{i}}">Модель</label>
+                                        </div>
+                                    </div>
+                                    <div class="col s2">
+                                        <label>Год</label>
+                                        <select class="browser-default" [formControlName]="i">
+                                            <option *ngFor="let year of arrYearOfProduction" [ngValue]="year">{{year}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col s3" (click)="deleteCar($event)">
+                                        <a [id]="i" class="btn-floating btn-large waves-effect waves-light red"><i
+                                                class="material-icons">delete</i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="waves-effect indigo darken-1 btn" (click)="addCars()"><i
+                                        class="material-icons left">add</i>Добавить
+                                    автомобиль</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
     </div>
-    <h2 class="teal-text teal-darken-2">Автомобили</h2>
     <div class="row">
-        <!-- <div class="row">
-            <div class="col s2">Номер</div>
-            <div class="col s2">Марка</div>
-            <div class="col s2">Модель</div>
-            <div class="col s2">Год</div>
-            <div class="col s3"></div>
-        </div> -->
-        <div class="row">
-            <div class="col s12">
-                <app-car></app-car>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <a class="waves-effect indigo darken-1 btn"><i class="material-icons left">add</i>Добавить автомобиль</a>
-    </div>
-    <div class="row">
-        <a class="waves-effect waves-light btn" disabled><i class="material-icons left">save</i>Сохранить</a>
-        <a routerLink="/api/owners" class="waves-effect grey darken-1 btn"><i
+        <a routerLink="/api/owners" class="waves-effect waves-light btn" (click)="deleteOwner()"
+            (click)="saveOwner()"><i class="material-icons left">save</i>Сохранить</a>
+        <a routerLink="/api/owners" class="waves-effect grey darken-1 btn" (click)="deleteOwner()"><i
                 class="material-icons left">arrow_back</i>Назат</a>
     </div>
 </div>

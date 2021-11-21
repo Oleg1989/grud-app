@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { OwnerService } from '../owner.service';
+import { OwnerService } from './service/owner.service';
 import { OwnerEntity } from '../interface/owner-entity';
+import { EditOwnerService } from '../edit-owner/service/edit-owner.service';
 
 @Component({
   selector: 'app-owners',
@@ -11,34 +12,47 @@ import { OwnerEntity } from '../interface/owner-entity';
 export class OwnersComponent implements OnInit {
 
   owners: OwnerEntity[] = [];
-  ownerId: string = '';
+  owner!: OwnerEntity;
+  ownerId!: string;
   disabled: boolean = true;
-  owner: string = '';
+  ownerTitle: string = '';
 
-  constructor(private ownerService: OwnerService) { }
+  constructor(
+    private ownerService: OwnerService,
+    private editOwnerService: EditOwnerService
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.getOwners();
+    this.ownerId = '';
   }
 
   getOwners(): void {
     this.ownerService.getOwners()
-      .subscribe(owners => this.owners = [...owners]);
+      .subscribe(owners => {
+        this.owners = [...owners]
+      });
+  }
+
+  getOwner(event: Event) {
+    this.editOwnerService.add(this.ownerId);
   }
 
   unlockButtons(event: Event): void {
     this.ownerId = (event.target as HTMLElement).parentElement?.id!;
     if (this.ownerId) {
       this.disabled = false;
-      let owner: OwnerEntity = this.owners.find(owner => owner.id === +this.ownerId)!;
-      this.owner = `${owner.aLastName} ${owner.aFirstName} ${owner.aMiddleName}`;
+      let owner: OwnerEntity = this.owners.find(owner => owner.id === this.ownerId)!;
+      this.ownerTitle = `${owner.aLastName} ${owner.aFirstName} ${owner.aMiddleName}`;
     }
   }
 
   delete(): void {
-    this.owners = this.owners.filter(owner => owner.id !== +this.ownerId);
-    this.ownerService.deleteOwner(+this.ownerId).subscribe();
-    this.owner = '';
+    this.owners = this.owners.filter(owner => owner.id !== this.ownerId);
+    this.ownerService.deleteOwner(this.ownerId).subscribe();
+    this.ownerTitle = '';
   }
 
 }

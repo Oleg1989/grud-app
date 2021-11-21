@@ -8,11 +8,11 @@
         <div class="row">
             <button routerLink="/api/edit-owner" class="waves-effect  light-blue darken-1 btn" [disabled]="disabled"><i
                     class="material-icons left">visibility</i>Просмотр</button>
-            <button routerLink="/api/edit-owner" class="waves-effect amber darken-1 btn" [disabled]="disabled"><i
-                    class="material-icons left">edit</i>Редактировать</button>
+            <button routerLink="/api/edit-owner" class="waves-effect amber darken-1 btn" [disabled]="disabled"
+                (click)="getOwner($event)"><i class="material-icons left">edit</i>Редактировать</button>
             <button class="waves-effect deep-orange darken-1 btn" [disabled]="disabled" (click)="delete()"><i
                     class="material-icons left">delete</i>Удалить</button>
-            <span><b>Владелец: </b>{{owner}}</span>
+            <span><b>Владелец: </b>{{ownerTitle}}</span>
         </div>
     </div>
 </div>

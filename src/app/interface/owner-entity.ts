@@ -1,7 +1,8 @@
+import { Guid } from "guid-typescript";
 import { CarEntity } from "./car-entity";
 
 export interface OwnerEntity {
-    id: number;
+    id: string;
     aLastName: string,
     aFirstName: string,
     aMiddleName: string,
